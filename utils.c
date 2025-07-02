@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 01:47:31 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/01 18:17:36 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:06:54 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void addback(my_list **List, int value)
 	my_list *current;
 
 	current = *List;
-	node = createNode(value, 0);
+	node = createnode(value, 0);
 	if (*List == NULL)
 	{
 		*List = node;
@@ -118,11 +118,9 @@ void put_in_struct(my_list **List, char **av)
 	while (av[i])
 	{
 		num = ft_atoi_modif(av[i]);
-		if (num == 99999999999999)
-		{
+		if (num > INT_MAX || num < INT_MIN)
 			return;
-		}
-		addBack(List, num);
+		addback(List, num);
 		i++;
 	}
 }
@@ -212,3 +210,58 @@ int	main(int ac, char **av)
 	}
 	printList(head);
 } */
+void	add_front(my_list **lst, my_list *new)
+{
+	new->next = *lst;
+	*lst = new;
+}
+
+void	add_back(my_list **lst, my_list *new)
+{
+	my_list	*current;
+
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	current = *lst;
+	while (current->next != NULL)
+		current = current->next;
+	current->next = new;
+}
+
+int	free_node(my_list *node)
+{
+	free(node);
+	return (0);
+}
+
+void	swap(my_list **stack)
+{
+	my_list	*current;
+	int	temp;
+	current = *stack;
+	if (!stack || !*stack || (*stack)->next == NULL)
+		return ;
+	temp = current->value;
+	current->value = current->next->value;
+	current->next->value = temp;
+}
+void	push(my_list **stack_a, my_list **stack_b)
+{
+	my_list	*node;
+	my_list *tmp;
+
+	if (!stack_a || !stack_b)
+		return ;
+	if (!(*stack_a))
+		return ;
+	node = createnode((*stack_a)->value, (*stack_a)->index);
+	if (!node)
+		return ;
+	tmp = *stack_a;
+	(*stack_a) = (*stack_a)->next;
+	add_front(stack_b, node);
+	free(tmp);
+}
