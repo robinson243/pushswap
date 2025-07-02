@@ -6,14 +6,14 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 01:47:31 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/02 14:06:54 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:19:49 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "push_swap.h"
 
-int is_space(char c)
+int	is_space(char c)
 {
 	if (c == 32 || c == '\f' || c == '\n' || c == '\r')
 		return (1);
@@ -22,14 +22,14 @@ int is_space(char c)
 	return (0);
 }
 
-void free_list(my_list **lst)
+void	free_list(my_list **lst)
 {
-	my_list *current;
-	my_list *data_next;
+	my_list	*current;
+	my_list	*data_next;
 
 	current = *lst;
 	if (!lst)
-		return;
+		return ;
 	while (current)
 	{
 		data_next = current->next;
@@ -39,11 +39,11 @@ void free_list(my_list **lst)
 	*lst = NULL;
 }
 
-long ft_atoi_modif(char *str)
+long	ft_atoi_modif(char *str)
 {
-	int i;
-	long int res;
-	int minus;
+	int			i;
+	long int	res;
+	int			minus;
 
 	i = 0;
 	res = 0;
@@ -59,7 +59,7 @@ long ft_atoi_modif(char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		res = res * 10 + str[i++] - '0';
-		if ((minus == -1 && -res < INT_MIN) || (minus == 1 && res > INT_MAX))
+		if ((minus == -1 && - res < INT_MIN) || (minus == 1 && res > INT_MAX))
 			return (99999999999999);
 	}
 	if (str[i] != '\0')
@@ -67,9 +67,9 @@ long ft_atoi_modif(char *str)
 	return ((int)(res * minus));
 }
 
-void free_tab(char **tab)
+void	free_tab(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tab[i])
@@ -77,9 +77,9 @@ void free_tab(char **tab)
 	free(tab);
 }
 
-my_list *createnode(int value, int index_count)
+my_list	*createnode(int value, int index_count)
 {
-	my_list *node;
+	my_list	*node;
 
 	node = malloc(sizeof(my_list));
 	node->value = value;
@@ -88,10 +88,10 @@ my_list *createnode(int value, int index_count)
 	return (node);
 }
 
-void addback(my_list **List, int value)
+void	addback(my_list **List, int value)
 {
-	my_list *node;
-	my_list *current;
+	my_list	*node;
+	my_list	*current;
 
 	current = *List;
 	node = createnode(value, 0);
@@ -99,7 +99,7 @@ void addback(my_list **List, int value)
 	{
 		*List = node;
 		node->next = NULL;
-		return;
+		return ;
 	}
 	while (current->next)
 		current = current->next;
@@ -107,27 +107,27 @@ void addback(my_list **List, int value)
 	node->next = NULL;
 }
 
-void put_in_struct(my_list **List, char **av)
+void	put_in_struct(my_list **List, char **av)
 {
-	int i;
-	int num;
+	int	i;
+	int	num;
 
 	i = 0;
 	if (!av || !av[0])
-		return;
+		return ;
 	while (av[i])
 	{
 		num = ft_atoi_modif(av[i]);
 		if (num > INT_MAX || num < INT_MIN)
-			return;
+			return ;
 		addback(List, num);
 		i++;
 	}
 }
 
-void printlist(my_list *head)
+void	printlist(my_list *head)
 {
-	my_list *current;
+	my_list	*current;
 
 	current = head;
 	while (current)
@@ -137,10 +137,10 @@ void printlist(my_list *head)
 	}
 }
 
-int check_duplicates(my_list *stack)
+int	check_duplicates(my_list *stack)
 {
-	my_list *cur;
-	my_list *nextone;
+	my_list	*cur;
+	my_list	*nextone;
 
 	cur = stack;
 	nextone = stack;
@@ -160,10 +160,10 @@ int check_duplicates(my_list *stack)
 	return (0);
 }
 
-int sorted_list(my_list *stack)
+int	sorted_list(my_list *stack)
 {
-	my_list *current;
-	my_list *nextone;
+	my_list	*current;
+	my_list	*nextone;
 
 	current = stack;
 	nextone = stack;
@@ -183,9 +183,10 @@ int sorted_list(my_list *stack)
 /*
 int	main(int ac, char **av)
 {
-	int i;
-	char **tab;
-	my_list *head;
+	int		i;
+	char	**tab;
+	my_list	*head;
+
 	head = NULL;
 	tab = NULL;
 	i = 1;
@@ -210,25 +211,11 @@ int	main(int ac, char **av)
 	}
 	printList(head);
 } */
+
 void	add_front(my_list **lst, my_list *new)
 {
 	new->next = *lst;
 	*lst = new;
-}
-
-void	add_back(my_list **lst, my_list *new)
-{
-	my_list	*current;
-
-	if (*lst == NULL)
-	{
-		*lst = new;
-		return ;
-	}
-	current = *lst;
-	while (current->next != NULL)
-		current = current->next;
-	current->next = new;
 }
 
 int	free_node(my_list *node)
@@ -240,7 +227,8 @@ int	free_node(my_list *node)
 void	swap(my_list **stack)
 {
 	my_list	*current;
-	int	temp;
+	int		temp;
+
 	current = *stack;
 	if (!stack || !*stack || (*stack)->next == NULL)
 		return ;
@@ -248,10 +236,11 @@ void	swap(my_list **stack)
 	current->value = current->next->value;
 	current->next->value = temp;
 }
+
 void	push(my_list **stack_a, my_list **stack_b)
 {
 	my_list	*node;
-	my_list *tmp;
+	my_list	*tmp;
 
 	if (!stack_a || !stack_b)
 		return ;
@@ -264,4 +253,40 @@ void	push(my_list **stack_a, my_list **stack_b)
 	(*stack_a) = (*stack_a)->next;
 	add_front(stack_b, node);
 	free(tmp);
+}
+
+void	rotate(my_list **stack)
+{
+	my_list	*tmp;
+
+	if (!(*stack) || !stack || (*stack)->next == NULL)
+		return ;
+	tmp = *stack;
+	(*stack) = (*stack)->next;
+	tmp->next = NULL;
+	addback(stack, tmp);
+}
+
+void	rr(my_list **a, my_list **b)
+{
+	if (a && *a && (*a)->next)
+		rotate(a);
+	if (b && *b && (*b)->next)
+		rotate(b);
+}
+
+void	reverse_rotate(my_list **stack)
+{
+	my_list	*tmp;
+	my_list	*current;
+
+	current = *stack;
+	if (!(*stack) || !stack || (*stack)->next == NULL)
+		return ;
+	while (current->next && current->next->next)
+		current = current->next;
+	tmp = current->next;
+	tmp->next = (*stack);
+	(*stack) = tmp;
+	current->next = NULL;
 }
