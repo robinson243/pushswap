@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 01:47:31 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/02 17:19:49 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:50:17 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	is_space(char c)
 	return (0);
 }
 
-void	free_list(my_list **lst)
+void	free_list(t_mylist **lst)
 {
-	my_list	*current;
-	my_list	*data_next;
+	t_mylist	*current;
+	t_mylist	*data_next;
 
 	current = *lst;
 	if (!lst)
@@ -77,21 +77,21 @@ void	free_tab(char **tab)
 	free(tab);
 }
 
-my_list	*createnode(int value, int index_count)
+t_mylist	*createnode(int value, int index_count)
 {
-	my_list	*node;
+	t_mylist	*node;
 
-	node = malloc(sizeof(my_list));
+	node = malloc(sizeof(t_mylist));
 	node->value = value;
 	node->index = index_count;
 	node->next = NULL;
 	return (node);
 }
 
-void	addback(my_list **List, int value)
+void	addback(t_mylist **List, int value)
 {
-	my_list	*node;
-	my_list	*current;
+	t_mylist	*node;
+	t_mylist	*current;
 
 	current = *List;
 	node = createnode(value, 0);
@@ -107,7 +107,7 @@ void	addback(my_list **List, int value)
 	node->next = NULL;
 }
 
-void	put_in_struct(my_list **List, char **av)
+void	put_in_struct(t_mylist **List, char **av)
 {
 	int	i;
 	int	num;
@@ -125,9 +125,9 @@ void	put_in_struct(my_list **List, char **av)
 	}
 }
 
-void	printlist(my_list *head)
+void	printlist(t_mylist *head)
 {
-	my_list	*current;
+	t_mylist	*current;
 
 	current = head;
 	while (current)
@@ -137,10 +137,10 @@ void	printlist(my_list *head)
 	}
 }
 
-int	check_duplicates(my_list *stack)
+int	check_duplicates(t_mylist *stack)
 {
-	my_list	*cur;
-	my_list	*nextone;
+	t_mylist	*cur;
+	t_mylist	*nextone;
 
 	cur = stack;
 	nextone = stack;
@@ -160,10 +160,10 @@ int	check_duplicates(my_list *stack)
 	return (0);
 }
 
-int	sorted_list(my_list *stack)
+int	sorted_list(t_mylist *stack)
 {
-	my_list	*current;
-	my_list	*nextone;
+	t_mylist	*current;
+	t_mylist	*nextone;
 
 	current = stack;
 	nextone = stack;
@@ -185,7 +185,7 @@ int	main(int ac, char **av)
 {
 	int		i;
 	char	**tab;
-	my_list	*head;
+	t_mylist	*head;
 
 	head = NULL;
 	tab = NULL;
@@ -212,21 +212,21 @@ int	main(int ac, char **av)
 	printList(head);
 } */
 
-void	add_front(my_list **lst, my_list *new)
+void	add_front(t_mylist **lst, t_mylist *new)
 {
 	new->next = *lst;
 	*lst = new;
 }
 
-int	free_node(my_list *node)
+int	free_node(t_mylist *node)
 {
 	free(node);
 	return (0);
 }
 
-void	swap(my_list **stack)
+void	swap(t_mylist **stack)
 {
-	my_list	*current;
+	t_mylist	*current;
 	int		temp;
 
 	current = *stack;
@@ -237,10 +237,10 @@ void	swap(my_list **stack)
 	current->next->value = temp;
 }
 
-void	push(my_list **stack_a, my_list **stack_b)
+void	push(t_mylist **stack_a, t_mylist **stack_b)
 {
-	my_list	*node;
-	my_list	*tmp;
+	t_mylist	*node;
+	t_mylist	*tmp;
 
 	if (!stack_a || !stack_b)
 		return ;
@@ -255,9 +255,9 @@ void	push(my_list **stack_a, my_list **stack_b)
 	free(tmp);
 }
 
-void	rotate(my_list **stack)
+void	rotate(t_mylist **stack)
 {
-	my_list	*tmp;
+	t_mylist	*tmp;
 
 	if (!(*stack) || !stack || (*stack)->next == NULL)
 		return ;
@@ -267,7 +267,7 @@ void	rotate(my_list **stack)
 	addback(stack, tmp);
 }
 
-void	rr(my_list **a, my_list **b)
+void	rr(t_mylist **a, t_mylist **b)
 {
 	if (a && *a && (*a)->next)
 		rotate(a);
@@ -275,10 +275,10 @@ void	rr(my_list **a, my_list **b)
 		rotate(b);
 }
 
-void	reverse_rotate(my_list **stack)
+void	reverse_rotate(t_mylist **stack)
 {
-	my_list	*tmp;
-	my_list	*current;
+	t_mylist	*tmp;
+	t_mylist	*current;
 
 	current = *stack;
 	if (!(*stack) || !stack || (*stack)->next == NULL)
