@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 01:47:31 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/03 18:50:17 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:37:45 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,34 @@ void	free_list(t_mylist **lst)
 
 long	ft_atoi_modif(char *str)
 {
-	int			i;
 	long int	res;
 	int			minus;
 
-	i = 0;
 	res = 0;
 	minus = 1;
-	while (is_space(str[i]))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
+	if (!str || *str == '\0')
+		return (99999999999999);
+	while (is_space(*str))
+		str++;
+	if (*str == '-' || *str == '+')
 	{
-		if (str[i] == '-')
+		if (*str == '-')
 			minus *= -1;
-		i++;
+		str++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	while (*str >= '0' && *str <= '9')
 	{
-		res = res * 10 + str[i++] - '0';
-		if ((minus == -1 && - res < INT_MIN) || (minus == 1 && res > INT_MAX))
+		res = res * 10 + (*str - '0');
+		str++;
+		if ((minus == -1 && res > -(long)INT_MIN) || (minus == 1 && res > INT_MAX))
 			return (99999999999999);
 	}
-	if (str[i] != '\0')
+	if (*str != '\0')
 		return (99999999999999);
-	return ((int)(res * minus));
+	return ((res * minus));
 }
 
-void	free_tab(char **tab)
+void	free_tableau(char **tab)
 {
 	int	i;
 
@@ -264,7 +265,7 @@ void	rotate(t_mylist **stack)
 	tmp = *stack;
 	(*stack) = (*stack)->next;
 	tmp->next = NULL;
-	addback(stack, tmp);
+	addback(stack, tmp->value);
 }
 
 void	rr(t_mylist **a, t_mylist **b)
@@ -289,4 +290,16 @@ void	reverse_rotate(t_mylist **stack)
 	tmp->next = (*stack);
 	(*stack) = tmp;
 	current->next = NULL;
+}
+
+void	rrr(t_mylist **a, t_mylist **b)
+{
+	if (a && *a && (*a)->next)
+		reverse_rotate(a);
+	if (b && *b && (*b)->next)
+		reverse_rotate(b);
+}
+
+int	is_valid(int ac, char **av)
+{
 }
