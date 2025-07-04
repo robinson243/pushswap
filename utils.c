@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 01:47:31 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/04 14:37:45 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:55:44 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	free_tableau(char **tab)
 	int	i;
 
 	i = 0;
+	if (!tab)
+		return ;
 	while (tab[i])
 		free(tab[i++]);
 	free(tab);
@@ -108,22 +110,23 @@ void	addback(t_mylist **List, int value)
 	node->next = NULL;
 }
 
-void	put_in_struct(t_mylist **List, char **av)
+int	put_in_struct(t_mylist **List, char **av)
 {
 	int	i;
 	int	num;
 
 	i = 0;
 	if (!av || !av[0])
-		return ;
+		return (1);
 	while (av[i])
 	{
 		num = ft_atoi_modif(av[i]);
 		if (num > INT_MAX || num < INT_MIN)
-			return ;
+			return (1);
 		addback(List, num);
 		i++;
 	}
+	return (0);
 }
 
 void	printlist(t_mylist *head)
@@ -181,37 +184,6 @@ int	sorted_list(t_mylist *stack)
 	}
 	return (1);
 }
-/*
-int	main(int ac, char **av)
-{
-	int		i;
-	char	**tab;
-	t_mylist	*head;
-
-	head = NULL;
-	tab = NULL;
-	i = 1;
-	if (ac == 2)
-	{
-		tab = ft_split(av[1], ' ');
-		if (!tab)
-		{
-			free_tab(tab);
-		}
-			return (0);
-		put_in_struct(&head, tab);
-		free(tab);
-	}
-	else if (ac > 2)
-	{
-		while (i < ac)
-		{
-			put_in_struct(&head, av[i]);
-			i++;
-		}
-	}
-	printList(head);
-} */
 
 void	add_front(t_mylist **lst, t_mylist *new)
 {
@@ -300,6 +272,138 @@ void	rrr(t_mylist **a, t_mylist **b)
 		reverse_rotate(b);
 }
 
+int	check_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (ft_atoi_modif(tab[i]) > INT_MAX || ft_atoi_modif(tab[i]) < INT_MIN)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char **get_args(int ac, char **av)
+{
+	int		i;
+	char	**args;
+
+	i = 0;
+	if (ac <= 1)
+		return (NULL);
+	if (ac == 2)
+	{
+		args = ft_split(av[1], ' ');
+		if (!args)
+			return (NULL);
+		return (args);
+	}
+	else 
+	{
+		args = malloc(sizeof(char *) * ac);
+		if (!args)
+			return (NULL);
+		while (i < (ac - 1))
+		{
+			args[i] = ft_strdup(av[i + 1]);
+			if (!args[i])
+				return (free_tableau(args), NULL);
+			i++;
+		}
+		args[i] = NULL;
+	}
+	return (args);
+}
+
 int	is_valid(int ac, char **av)
 {
+	char **tab;
+	t_mylist *head;
+
+	head = NULL;
+	tab = get_args(ac, av);
+	if (!tab)
+		return (0);
+	if (check_tab(tab))
+		return (free_tableau(tab), 0);
+	if (put_in_struct(&head, tab))
+	{
+		free_tableau(tab);
+		free_list(&head);
+		return (0);
+	}
+	if (check_duplicates(head))
+	{
+		free_tableau(tab);
+		free_list(&head);
+		return (0);
+	}
+	free_list(&head);
+	free_tableau(tab);
+	return (1);
+}
+#include <stdio.h>
+#include "push_swap.h"
+
+void test_case(int ac, char **av, char *description)
+{
+    printf("=== Test: %s ===\n", description);
+    printf("Arguments: ");
+    for (int i = 1; i < ac; i++)
+        printf("\"%s\" ", av[i]);
+    printf("\n");
+
+    int result = is_valid(ac, av);
+    printf("Result: %s\n\n", result ? "VALID" : "INVALID");
+}
+#include "push_swap.h"
+#include <stdio.h>
+
+void run_test(int ac, char **av, char *test_name) {
+    printf("🔹 \033[1;34m%s\033[0m\n", test_name);
+    printf("Arguments : ");
+    for (int i = 1; i < ac; i++) 
+        printf("\"%s\" ", av[i]);
+    printf("\n");
+
+    int result = is_valid(ac, av);
+    printf("Résultat : %s\n", 
+           result ? "\033[1;32mVALID\033[0m" : "\033[1;31mINVALID\033[0m");
+
+    // Test Valgrind intégré
+    printf("Valgrind : ");
+    fflush(stdout);
+    char cmd[512];
+    snprintf(cmd, sizeof(cmd), 
+             "valgrind --leak-check=full --quiet ./push_swap %s 2>&1 | grep -E 'ERROR SUMMARY|LEAK SUMMARY'", 
+             av[1] ? av[1] : "");
+    system(cmd);
+    printf("\n────────────────────\n");
+}
+
+int main(void) {
+    // 1. Cas normal
+    char *normal[] = {"./push_swap", "1", "2", "3"};
+    run_test(4, normal, "Cas standard (valide)");
+
+    // 2. Doublons
+    char *dupes[] = {"./push_swap", "1", "1", "2"};
+    run_test(4, dupes, "Doublons (invalide)");
+
+    // 3. Overflow
+    char *overflow[] = {"./push_swap", "2147483648"};
+    run_test(2, overflow, "Overflow INT_MAX");
+
+    // 4. Caractère invalide
+    char *invalid[] = {"./push_swap", "1", "a", "3"};
+    run_test(4, invalid, "Caractère non-numérique");
+
+    // 5. Chaîne vide
+    char *empty[] = {"./push_swap", ""};
+    run_test(2, empty, "Chaîne vide");
+
+    return 0;
 }
