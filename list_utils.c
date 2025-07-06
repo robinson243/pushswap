@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:49:26 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/04 21:49:28 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/06 11:25:58 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,17 @@ void	add_front(t_mylist **lst, t_mylist *new)
 	*lst = new;
 }
 
-void	printlist(t_mylist *head)
+int	countlist(t_mylist *head)
 {
 	t_mylist	*current;
+	int			i;
 
 	current = head;
+	i = 0;
 	while (current)
 	{
-		printf("la valeur est %d \n", current->value);
 		current = current->next;
+		i++;
 	}
+	return (i);
 }

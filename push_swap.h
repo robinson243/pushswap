@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 21:09:54 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/04 21:13:33 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/06 11:26:15 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ void		reverse_rotate(t_mylist **stack);
 void		rr(t_mylist **a, t_mylist **b);
 /* stack_operations2.c */
 void		rrr(t_mylist **a, t_mylist **b);
+int			countlist(t_mylist *head);
 
 #endif
