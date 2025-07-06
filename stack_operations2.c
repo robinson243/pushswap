@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:49:39 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/06 11:25:52 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/06 23:55:02 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	rrr(t_mylist **a, t_mylist **b)
 	if (b && *b && (*b)->next)
 		reverse_rotate(b);
 }
+
 void	printlist(t_mylist *head)
 {
 	t_mylist	*current;
