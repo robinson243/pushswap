@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:19 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/07 18:54:30 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/07 21:55:17 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	partition(int *tab, int deb, int fin)
 	int	i;
 
 	i = 0;
-	pivot = tab[length_tab(tab) - 1];
+	pivot = tab[fin];
 	indice = deb;
 	while ((deb + i) < length_tab(tab))
 	{
