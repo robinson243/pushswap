@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:19 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/08 12:52:29 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:27:13 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,15 @@ int partition(int *tab, int deb, int fin)
 }
 
 
-int	*qsort(int *tab, int deb, int fin)
+void	qsort(int *tab, int deb, int fin)
 {
-	int	i;
-	int	pivot;
-	
-	pivot = tab[length_tab(tab) - 1];
-	while (tab[i])
+	int	p;
+	if (deb < fin)
 	{
-		if (tab[i] > pivot)
-		{
-			deb = i;
-		}
-		
-		i++;
+		p = partition(tab, deb, fin);
+		qsort(tab, deb, p-1);
+		qsort(tab, p + 1, fin);
 	}
-	
 	
 }
 
