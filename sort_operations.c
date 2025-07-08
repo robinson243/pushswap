@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 11:13:02 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/06 23:54:42 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:23:24 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	main(void)
 
 	return (0);
 }
-/* int main(void)
+int main(void)
 {
 	t_mylist *a = NULL;
 	t_mylist *b = NULL;

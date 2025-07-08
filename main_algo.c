@@ -6,26 +6,12 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:19 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/08 13:33:59 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:27:40 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "libft/libft.h"
-
-/* Principe de Quick Sort dans Push_swap
-
-	Choisis un pivot (souvent la mÃ©diane ou un quartile).
-
-	Pousse dans b tous les Ã©lÃ©ments infÃ©rieurs au pivot.
-
-	Garde dans a les Ã©lÃ©ments supÃ©rieurs ou Ã©gaux.
-
-	RÃ©pÃ¨te le processus rÃ©cursivement dans chaque pile.
-
-	Ã€ la fin, remonte les Ã©lÃ©ments de b vers a en les triant (souvent les plus grands dâ€™abord).
-
-*/
 
 int	length_tab(int *tab)
 {
@@ -48,10 +34,13 @@ void	ft_swap(int *a, int *b)
 
 int partition(int *tab, int deb, int fin)
 {
-	int pivot = tab[fin];
-	int i = deb;
-	int j = deb;
+	int pivot;
+	int i;
+	int j;
 
+	pivot = tab[fin]; 
+	i = deb;
+	j = deb;
 	while (j < fin)
 	{
 		if (tab[j] < pivot)
@@ -66,14 +55,14 @@ int partition(int *tab, int deb, int fin)
 }
 
 
-void	qsort(int *tab, int deb, int fin)
+void	quicksort(int *tab, int deb, int fin)
 {
 	int	p;
 	if (deb < fin)
 	{
 		p = partition(tab, deb, fin);
-		qsort(tab, deb, p-1);
-		qsort(tab, p + 1, fin);
+		quicksort(tab, deb, p-1);
+		quicksort(tab, p + 1, fin);
 	}
 	
 }
@@ -93,4 +82,43 @@ int	*get_sorted_array(t_mylist *a, int size)
 		i++;
 	}
 	return (tab);
+}
+int	*get_chunk_limits(int *sorted_tab, int size, int chunk_count)
+{
+	int	*tab;
+	int	i;
+	int	chunk_size;
+	int	plus;
+
+	i = 0;
+	chunk_size = (size/chunk_count);
+	plus = 0;
+	tab = malloc(sizeof(int) * chunk_count);
+	if (!tab)
+		return (0);
+	while (i < chunk_count)
+	{
+		tab[i] = sorted_tab[chunk_size - 1 + plus];
+		i++;
+		plus += chunk_size;
+	}
+	return (tab);
+}
+
+int	main(void)
+{
+	int	sorted_tab[] = {2, 4, 8, 11, 13, 15, 18, 23, 27, 30};
+	int	size = sizeof(sorted_tab) / sizeof(int);
+	int	chunk_count = 5;
+	int	*chunk_limits = get_chunk_limits(sorted_tab, size, chunk_count);
+
+	if (!chunk_limits)
+		return (1);
+
+	printf("Chunk limits:\n");
+	for (int i = 0; i < chunk_count; i++)
+		printf("chunk %d max: %d\n", i + 1, chunk_limits[i]);
+
+	free(chunk_limits);
+	return (0);
 }
