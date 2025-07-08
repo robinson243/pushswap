@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:19 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/08 14:27:40 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:54:40 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void	ft_swap(int *a, int *b)
 	*b = tmp;
 }
 
-int partition(int *tab, int deb, int fin)
+int	partition(int *tab, int deb, int fin)
 {
-	int pivot;
-	int i;
-	int j;
+	int	pivot;
+	int	i;
+	int	j;
 
-	pivot = tab[fin]; 
+	pivot = tab[fin];
 	i = deb;
 	j = deb;
 	while (j < fin)
@@ -51,26 +51,26 @@ int partition(int *tab, int deb, int fin)
 		j++;
 	}
 	ft_swap(&tab[i], &tab[fin]);
-	return i;
+	return (i);
 }
-
 
 void	quicksort(int *tab, int deb, int fin)
 {
 	int	p;
+
 	if (deb < fin)
 	{
 		p = partition(tab, deb, fin);
-		quicksort(tab, deb, p-1);
+		quicksort(tab, deb, p - 1);
 		quicksort(tab, p + 1, fin);
 	}
-	
 }
 
 int	*get_sorted_array(t_mylist *a, int size)
 {
 	int	*tab;
 	int	i;
+
 	tab = malloc(sizeof(int) * size);
 	if (!tab)
 		return (NULL);
@@ -83,6 +83,7 @@ int	*get_sorted_array(t_mylist *a, int size)
 	}
 	return (tab);
 }
+
 int	*get_chunk_limits(int *sorted_tab, int size, int chunk_count)
 {
 	int	*tab;
@@ -91,7 +92,7 @@ int	*get_chunk_limits(int *sorted_tab, int size, int chunk_count)
 	int	plus;
 
 	i = 0;
-	chunk_size = (size/chunk_count);
+	chunk_size = (size / chunk_count);
 	plus = 0;
 	tab = malloc(sizeof(int) * chunk_count);
 	if (!tab)
