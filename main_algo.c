@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:19 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/07 21:55:17 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/08 12:52:29 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,37 +37,35 @@ int	length_tab(int *tab)
 	return (i);
 }
 
-int	partition(int *tab, int deb, int fin)
-{
-	int	pivot;
-	int	indice;
-	int	i;
-
-	i = 0;
-	pivot = tab[fin];
-	indice = deb;
-	while ((deb + i) < length_tab(tab))
-	{
-		if (tab[i] <= pivot)
-		{
-			ft_swap(tab[i], tab[indice]);
-			indice++;
-		}
-		i++;
-	}
-	ft_swap(tab[indice], tab[fin]);
-	return (indice);
-	
-}
-
 void	ft_swap(int *a, int *b)
 {
-	int	*tmp;
+	int	tmp;
 
 	tmp = *a;
 	*a = *b;
 	*b = tmp;
 }
+
+int partition(int *tab, int deb, int fin)
+{
+	int pivot = tab[fin];
+	int i = deb;
+	int j = deb;
+
+	while (j < fin)
+	{
+		if (tab[j] < pivot)
+		{
+			ft_swap(&tab[i], &tab[j]);
+			i++;
+		}
+		j++;
+	}
+	ft_swap(&tab[i], &tab[fin]);
+	return i;
+}
+
+
 int	*qsort(int *tab, int deb, int fin)
 {
 	int	i;
