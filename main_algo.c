@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:19 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/08 15:54:40 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/09 02:03:40 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,20 @@ int	*get_chunk_limits(int *sorted_tab, int size, int chunk_count)
 	int	i;
 	int	chunk_size;
 	int	plus;
+	int	index;
 
 	i = 0;
-	chunk_size = (size / chunk_count);
+	chunk_size = size / chunk_count;
 	plus = 0;
 	tab = malloc(sizeof(int) * chunk_count);
 	if (!tab)
-		return (0);
+		return (NULL);
 	while (i < chunk_count)
 	{
-		tab[i] = sorted_tab[chunk_size - 1 + plus];
+		index = chunk_size - 1 + plus;
+		if (i == chunk_count - 1 || index >= size)
+			index = size - 1;
+		tab[i] = sorted_tab[index];
 		i++;
 		plus += chunk_size;
 	}
