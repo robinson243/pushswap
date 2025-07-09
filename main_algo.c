@@ -6,65 +6,12 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:19 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/09 02:03:40 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/10 01:11:27 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
 #include "libft/libft.h"
-
-int	length_tab(int *tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
-}
-
-void	ft_swap(int *a, int *b)
-{
-	int	tmp;
-
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
-
-int	partition(int *tab, int deb, int fin)
-{
-	int	pivot;
-	int	i;
-	int	j;
-
-	pivot = tab[fin];
-	i = deb;
-	j = deb;
-	while (j < fin)
-	{
-		if (tab[j] < pivot)
-		{
-			ft_swap(&tab[i], &tab[j]);
-			i++;
-		}
-		j++;
-	}
-	ft_swap(&tab[i], &tab[fin]);
-	return (i);
-}
-
-void	quicksort(int *tab, int deb, int fin)
-{
-	int	p;
-
-	if (deb < fin)
-	{
-		p = partition(tab, deb, fin);
-		quicksort(tab, deb, p - 1);
-		quicksort(tab, p + 1, fin);
-	}
-}
+#include "push_swap.h"
 
 int	*get_sorted_array(t_mylist *a, int size)
 {
@@ -110,20 +57,117 @@ int	*get_chunk_limits(int *sorted_tab, int size, int chunk_count)
 	return (tab);
 }
 
-int	main(void)
+int	has_chunk_value(t_mylist **stack, int nb)
 {
-	int	sorted_tab[] = {2, 4, 8, 11, 13, 15, 18, 23, 27, 30};
-	int	size = sizeof(sorted_tab) / sizeof(int);
-	int	chunk_count = 5;
-	int	*chunk_limits = get_chunk_limits(sorted_tab, size, chunk_count);
+	t_mylist	*cur;
+	int			value;
 
-	if (!chunk_limits)
-		return (1);
-
-	printf("Chunk limits:\n");
-	for (int i = 0; i < chunk_count; i++)
-		printf("chunk %d max: %d\n", i + 1, chunk_limits[i]);
-
-	free(chunk_limits);
+	cur = *stack;
+	while (cur)
+	{
+		if (cur->value <= nb)
+			return (1);
+		cur = cur->next;
+	}
 	return (0);
 }
+
+void	filter_by_chunks(t_mylist **stack_a, t_mylist **stack_b,
+		int *sorted_tab, int size)
+{
+	int	numberchunks;
+	int	i;
+	int	*chunk_limits;
+
+	if (size <= 10)
+		numberchunks = 4;
+	else
+		numberchunks = 10;
+	chunk_limits = get_chunk_limits(sorted_tab, size, numberchunks);
+	if (!chunk_limits)
+		return ;
+	i = 0;
+	while (i < numberchunks)
+	{
+		while (has_chunk_value(stack_a, chunk_limits[i]))
+		{
+			if ((*stack_a)->value <= chunk_limits[i])
+				push(stack_a, stack_b);
+			else
+				rotate(stack_a);
+		}
+		i++;
+	}
+	free(chunk_limits);
+}
+
+/* 
+#include <stdio.h>
+#include <stdlib.h>
+
+// Prototypes des fonctions que tu as déjà
+int countlist(t_mylist *lst);
+void pushswap(t_mylist **a, t_mylist **b);
+void print_stack(t_mylist *stack);
+void free_stack(t_mylist **stack);
+void push_front(t_mylist **stack, int value);
+
+// Implémentations simples pour test
+
+void push_front(t_mylist **stack, int value)
+{
+    t_mylist *node = malloc(sizeof(t_mylist));
+    if (!node)
+        return;
+    node->value = value;
+    node->next = *stack;
+    *stack = node;
+}
+
+void print_stack(t_mylist *stack)
+{
+    while (stack)
+    {
+        printf("%d ", stack->value);
+        stack = stack->next;
+    }
+    printf("\n");
+}
+
+void free_stack(t_mylist **stack)
+{
+    t_mylist *tmp;
+    while (*stack)
+    {
+        tmp = (*stack)->next;
+        free(*stack);
+        *stack = tmp;
+    }
+}
+
+int main(void)
+{
+    t_mylist *a = NULL;
+    t_mylist *b = NULL;
+
+    // Remplir la pile a avec des valeurs non triées
+    push_front(&a, 3);
+    push_front(&a, 1);
+    push_front(&a, 8);
+    push_front(&a, 5);
+    push_front(&a, 2);
+
+    printf("Avant pushswap: ");
+    print_stack(a);
+
+    pushswap(&a, &b);
+
+    printf("Après pushswap: ");
+    print_stack(a);
+
+    free_stack(&a);
+    free_stack(&b);
+
+    return 0;
+}
+ */

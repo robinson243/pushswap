@@ -6,12 +6,20 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 11:13:02 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/08 14:23:24 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/10 00:59:09 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "push_swap.h"
+
+void	sort_two(t_mylist **stack)
+{
+	if ((*stack)->value > (*stack)->next->value)
+		swap(stack);
+	else
+		return ;
+}
 
 void	sort_three(t_mylist **stack)
 {
