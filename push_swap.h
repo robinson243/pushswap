@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 21:09:54 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 13:15:20 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:51:36 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ int					is_valid(int ac, char **av);
 /*----------------------------------------------------------------------------*/
 /*                              stack_operations.c                            */
 /*----------------------------------------------------------------------------*/
-void	swap(t_mylist **stack, char *name);
-void	push(t_mylist **stack_a, t_mylist **stack_b, char *name);
-void	rotate(t_mylist **stack, char *name);
-void	reverse_rotate(t_mylist **stack, char *name);
-void	printlist(t_mylist *head);
+void				swap(t_mylist **stack, char *name);
+void				push(t_mylist **stack_a, t_mylist **stack_b, char *name);
+void				rotate(t_mylist **stack, char *name);
+void				reverse_rotate(t_mylist **stack, char *name);
+void				printlist(t_mylist *head);
 
 /*----------------------------------------------------------------------------*/
 /*                              sort_operations.c                             */
