@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:19 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 01:11:27 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:10:31 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ void	filter_by_chunks(t_mylist **stack_a, t_mylist **stack_b,
 	int	i;
 	int	*chunk_limits;
 
-	if (size <= 10)
-		numberchunks = 4;
+	if (size <= 100)
+		numberchunks = 5;
 	else
-		numberchunks = 10;
+		numberchunks = 12;
 	chunk_limits = get_chunk_limits(sorted_tab, size, numberchunks);
 	if (!chunk_limits)
 		return ;
@@ -92,9 +92,9 @@ void	filter_by_chunks(t_mylist **stack_a, t_mylist **stack_b,
 		while (has_chunk_value(stack_a, chunk_limits[i]))
 		{
 			if ((*stack_a)->value <= chunk_limits[i])
-				push(stack_a, stack_b);
+				push(stack_a, stack_b, "pb");
 			else
-				rotate(stack_a);
+				rotate(stack_a, "ra");
 		}
 		i++;
 	}

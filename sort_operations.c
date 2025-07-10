@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 11:13:02 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 00:59:09 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:09:38 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	sort_two(t_mylist **stack)
 {
 	if ((*stack)->value > (*stack)->next->value)
-		swap(stack);
+		swap(stack,"sa");
 	else
 		return ;
 }
@@ -26,26 +26,26 @@ void	sort_three(t_mylist **stack)
 	if ((*stack)->value > (*stack)->next->value
 		&& (*stack)->next->value < (*stack)->next->next->value
 		&& (*stack)->value < (*stack)->next->next->value)
-		swap(stack);
+		swap(stack, "sa");
 	else if ((*stack)->value > (*stack)->next->value
 		&& (*stack)->next->value < (*stack)->next->next->value)
-		rotate(stack);
+		rotate(stack,"ra");
 	else if ((*stack)->value > (*stack)->next->value
 		&& (*stack)->next->value > (*stack)->next->next->value)
 	{
-		rotate(stack);
-		swap(stack);
+		rotate(stack, "ra");
+		swap(stack, "sa");
 	}
 	else if ((*stack)->value < (*stack)->next->value
 		&& (*stack)->next->value > (*stack)->next->next->value
 		&& (*stack)->value < (*stack)->next->next->value)
 	{
-		reverse_rotate(stack);
-		swap(stack);
+		reverse_rotate(stack, "rra");
+		swap(stack, "sa");
 	}
 	else if ((*stack)->value < (*stack)->next->value
 		&& (*stack)->next->value > (*stack)->next->next->value)
-		reverse_rotate(stack);
+		reverse_rotate(stack, "rra");
 }
 
 int	find_smallest(t_mylist **stack_a)
@@ -85,7 +85,7 @@ void	push_to_b(t_mylist **stack_a, t_mylist **stack_b)
 	{
 		while (pos > 0)
 		{
-			rotate(stack_a);
+			rotate(stack_a, "ra");
 			pos--;
 		}
 	}
@@ -93,11 +93,11 @@ void	push_to_b(t_mylist **stack_a, t_mylist **stack_b)
 	{
 		while (pos < size)
 		{
-			reverse_rotate(stack_a);
+			reverse_rotate(stack_a, "rra");
 			pos++;
 		}
 	}
-	push(stack_a, stack_b);
+	push(stack_a, stack_b, "pb");
 }
 
 void	sort_five(t_mylist **stack_a, t_mylist **stack_b)
@@ -105,8 +105,8 @@ void	sort_five(t_mylist **stack_a, t_mylist **stack_b)
 	push_to_b(stack_a, stack_b);
 	push_to_b(stack_a, stack_b);
 	sort_three(stack_a);
-	push(stack_b, stack_a);
-	push(stack_b, stack_a);
+	push(stack_b, stack_a, "pa");
+	push(stack_b, stack_a, "pa");
 }
 /* #include "push_swap.h"
 

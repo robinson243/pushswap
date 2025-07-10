@@ -6,21 +6,11 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 01:10:50 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 01:11:05 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/10 12:52:52 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	length_tab(int *tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
-}
 
 void	ft_swap(int *a, int *b)
 {

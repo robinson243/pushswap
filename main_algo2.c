@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 01:09:22 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 01:12:04 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:11:35 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	rotate_to_top(t_mylist **b, int index)
 	{
 		while (index + i < size)
 		{
-			reverse_rotate(b);
+			reverse_rotate(b, "rb");
 			i++;
 		}
 	}
@@ -64,7 +64,7 @@ void	rotate_to_top(t_mylist **b, int index)
 	{
 		while (index - i > 0)
 		{
-			rotate(b);
+			rotate(b, "rb");
 			i++;
 		}
 	}
@@ -80,7 +80,7 @@ void	reinject_from_b(t_mylist **a, t_mylist **b)
 		max = find_max(*b);
 		index = get_index(*b, max);
 		rotate_to_top(b, index);
-		push(b, a);
+		push(b, a, "pa");
 	}
 }
 

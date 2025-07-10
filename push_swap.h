@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 21:09:54 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 01:14:39 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:15:20 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 # include <unistd.h>
 
 /* Structure de données */
-typedef struct s_list
+typedef struct s_mylist
 {
 	int				value;
 	int				index;
-	struct s_list	*next;
+	struct s_mylist	*next;
 }					t_mylist;
 
 /*----------------------------------------------------------------------------*/
@@ -56,17 +56,11 @@ int					is_valid(int ac, char **av);
 /*----------------------------------------------------------------------------*/
 /*                              stack_operations.c                            */
 /*----------------------------------------------------------------------------*/
-void				swap(t_mylist **stack);
-void				push(t_mylist **stack_a, t_mylist **stack_b);
-void				rotate(t_mylist **stack);
-void				reverse_rotate(t_mylist **stack);
-void				rr(t_mylist **a, t_mylist **b);
-
-/*----------------------------------------------------------------------------*/
-/*                             stack_operations2.c                            */
-/*----------------------------------------------------------------------------*/
-void				rrr(t_mylist **a, t_mylist **b);
-void				printlist(t_mylist *head);
+void	swap(t_mylist **stack, char *name);
+void	push(t_mylist **stack_a, t_mylist **stack_b, char *name);
+void	rotate(t_mylist **stack, char *name);
+void	reverse_rotate(t_mylist **stack, char *name);
+void	printlist(t_mylist *head);
 
 /*----------------------------------------------------------------------------*/
 /*                              sort_operations.c                             */
@@ -83,7 +77,6 @@ void				push_to_b(t_mylist **stack_a, t_mylist **stack_b);
 void				quicksort(int *tab, int deb, int fin);
 int					partition(int *tab, int deb, int fin);
 void				ft_swap(int *a, int *b);
-int					length_tab(int *tab);
 
 /*----------------------------------------------------------------------------*/
 /*                                main_algo.c                                 */

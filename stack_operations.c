@@ -6,14 +6,14 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:49:35 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/04 22:04:05 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:14:07 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "push_swap.h"
 
-void	swap(t_mylist **stack)
+void	swap(t_mylist **stack, char *name)
 {
 	t_mylist	*current;
 	int			temp;
@@ -24,9 +24,14 @@ void	swap(t_mylist **stack)
 	temp = current->value;
 	current->value = current->next->value;
 	current->next->value = temp;
+	if (name)
+	{
+		write(1, name, strlen(name));
+		write(1, "\n", 1);
+	}
 }
 
-void	push(t_mylist **stack_a, t_mylist **stack_b)
+void	push(t_mylist **stack_a, t_mylist **stack_b, char *name)
 {
 	t_mylist	*node;
 	t_mylist	*tmp;
@@ -42,9 +47,14 @@ void	push(t_mylist **stack_a, t_mylist **stack_b)
 	(*stack_a) = (*stack_a)->next;
 	add_front(stack_b, node);
 	free(tmp);
+	if (name)
+	{
+		write(1, name, strlen(name));
+		write(1, "\n", 1);
+	}
 }
 
-void	rotate(t_mylist **stack)
+void	rotate(t_mylist **stack, char *name)
 {
 	t_mylist	*tmp;
 
@@ -54,9 +64,15 @@ void	rotate(t_mylist **stack)
 	(*stack) = (*stack)->next;
 	tmp->next = NULL;
 	addback(stack, tmp->value);
+	free(tmp);
+	if (name)
+	{
+		write(1, name, strlen(name));
+		write(1, "\n", 1);
+	}
 }
 
-void	reverse_rotate(t_mylist **stack)
+void	reverse_rotate(t_mylist **stack, char *name)
 {
 	t_mylist	*tmp;
 	t_mylist	*current;
@@ -70,12 +86,20 @@ void	reverse_rotate(t_mylist **stack)
 	tmp->next = (*stack);
 	(*stack) = tmp;
 	current->next = NULL;
+	if (name)
+	{
+		write(1, name, strlen(name));
+		write(1, "\n", 1);
+	}
 }
-
-void	rr(t_mylist **a, t_mylist **b)
+void	printlist(t_mylist *head)
 {
-	if (a && *a && (*a)->next)
-		rotate(a);
-	if (b && *b && (*b)->next)
-		rotate(b);
+	t_mylist	*current;
+
+	current = head;
+	while (current)
+	{
+		printf("%d ", current->value);
+		current = current->next;
+	}
 }

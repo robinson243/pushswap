@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_operations2.c                                :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 21:49:39 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/06 23:55:02 by romukena         ###   ########.fr       */
+/*   Created: 2025/07/10 12:32:18 by romukena          #+#    #+#             */
+/*   Updated: 2025/07/10 12:40:13 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "push_swap.h"
 
-void	rrr(t_mylist **a, t_mylist **b)
+int	main(int ac, char **av)
 {
-	if (a && *a && (*a)->next)
-		reverse_rotate(a);
-	if (b && *b && (*b)->next)
-		reverse_rotate(b);
-}
+    t_mylist	*stack_a;
+    t_mylist	*stack_b;
 
-void	printlist(t_mylist *head)
-{
-	t_mylist	*current;
-
-	current = head;
-	while (current)
-	{
-		printf("%d ", current->value);
-		current = current->next;
-	}
+	stack_a = NULL;
+	stack_b = NULL;
+    if (ac < 2 || !is_valid(ac, av))
+    {
+		write(2, "Error\n", 6);
+        return (1);
+    }
+    if (put_in_struct(&stack_a, get_args(ac, av)))
+    {
+        free_list(&stack_a);
+        return (1);
+    }
+    pushswap(&stack_a, &stack_b);
+    free_list(&stack_a);
+    return (0);
 }
