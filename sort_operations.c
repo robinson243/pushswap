@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 11:13:02 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 13:09:38 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:50:25 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	sort_two(t_mylist **stack)
 {
 	if ((*stack)->value > (*stack)->next->value)
-		swap(stack,"sa");
+		swap(stack, "sa");
 	else
 		return ;
 }
@@ -29,7 +29,7 @@ void	sort_three(t_mylist **stack)
 		swap(stack, "sa");
 	else if ((*stack)->value > (*stack)->next->value
 		&& (*stack)->next->value < (*stack)->next->next->value)
-		rotate(stack,"ra");
+		rotate(stack, "ra");
 	else if ((*stack)->value > (*stack)->next->value
 		&& (*stack)->next->value > (*stack)->next->next->value)
 	{

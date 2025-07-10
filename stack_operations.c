@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:49:35 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 13:14:07 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:48:34 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	reverse_rotate(t_mylist **stack, char *name)
 		write(1, "\n", 1);
 	}
 }
+
 void	printlist(t_mylist *head)
 {
 	t_mylist	*current;
