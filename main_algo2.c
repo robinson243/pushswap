@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 01:09:22 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 13:11:35 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:48:00 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,24 @@ int	find_max(t_mylist *b)
 	}
 	return (value);
 }
+void	move_to_top(t_mylist **stack, int index, char *ra_cmd, char *rra_cmd)
+{
+	int	size;
+	int	i;
 
+	i = 0;
+	size = countlist(*stack);
+	if (index <= size / 2)
+	{
+		while (i++ < index)
+			rotate(stack, ra_cmd);
+	}
+	else
+	{
+		while (i++ < size - index)
+			reverse_rotate(stack, rra_cmd);
+	}
+}
 int	get_index(t_mylist *b, int value)
 {
 	t_mylist	*cur;
@@ -45,31 +62,6 @@ int	get_index(t_mylist *b, int value)
 	return (i);
 }
 
-void	rotate_to_top(t_mylist **b, int index)
-{
-	int	size;
-	int	i;
-
-	size = countlist(*b);
-	i = 0;
-	if ((size / 2) < index)
-	{
-		while (index + i < size)
-		{
-			reverse_rotate(b, "rb");
-			i++;
-		}
-	}
-	else if ((size / 2) >= index)
-	{
-		while (index - i > 0)
-		{
-			rotate(b, "rb");
-			i++;
-		}
-	}
-}
-
 void	reinject_from_b(t_mylist **a, t_mylist **b)
 {
 	int	max;
@@ -79,7 +71,7 @@ void	reinject_from_b(t_mylist **a, t_mylist **b)
 	{
 		max = find_max(*b);
 		index = get_index(*b, max);
-		rotate_to_top(b, index);
+		move_to_top(b, index, "rb", "rrb");
 		push(b, a, "pa");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:19 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 13:10:31 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/10 17:02:03 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	*get_sorted_array(t_mylist *a, int size)
 	int	*tab;
 	int	i;
 
+	if (!a || size <= 0)
+		return (NULL);
 	tab = malloc(sizeof(int) * size);
 	if (!tab)
 		return (NULL);
@@ -72,6 +74,23 @@ int	has_chunk_value(t_mylist **stack, int nb)
 	return (0);
 }
 
+int	find_next_in_chunk(t_mylist *stack, int limit)
+{
+	int	i;
+
+	i = 0;
+	if (!stack)
+		return (-1);
+	while (stack)
+	{
+		if (stack->value <= limit)
+			return (i);
+		stack = stack->next;
+		i++;
+	}
+	return (-1);
+}
+
 void	filter_by_chunks(t_mylist **stack_a, t_mylist **stack_b,
 		int *sorted_tab, int size)
 {
@@ -80,9 +99,9 @@ void	filter_by_chunks(t_mylist **stack_a, t_mylist **stack_b,
 	int	*chunk_limits;
 
 	if (size <= 100)
-		numberchunks = 5;
-	else
-		numberchunks = 12;
+        numberchunks = 5;
+    else
+        numberchunks = 11 + (size / 100);
 	chunk_limits = get_chunk_limits(sorted_tab, size, numberchunks);
 	if (!chunk_limits)
 		return ;
