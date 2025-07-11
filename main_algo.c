@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:19 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 17:02:03 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/11 02:45:37 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ void	filter_by_chunks(t_mylist **stack_a, t_mylist **stack_b,
 	int	*chunk_limits;
 
 	if (size <= 100)
-        numberchunks = 5;
-    else
-        numberchunks = 11 + (size / 100);
+		numberchunks = 5;
+	else
+		numberchunks = 11;
 	chunk_limits = get_chunk_limits(sorted_tab, size, numberchunks);
 	if (!chunk_limits)
 		return ;
@@ -120,73 +120,73 @@ void	filter_by_chunks(t_mylist **stack_a, t_mylist **stack_b,
 	free(chunk_limits);
 }
 
-/* 
+/*
 #include <stdio.h>
 #include <stdlib.h>
 
 // Prototypes des fonctions que tu as déjà
-int countlist(t_mylist *lst);
-void pushswap(t_mylist **a, t_mylist **b);
-void print_stack(t_mylist *stack);
-void free_stack(t_mylist **stack);
-void push_front(t_mylist **stack, int value);
+int		countlist(t_mylist *lst);
+void	pushswap(t_mylist **a, t_mylist **b);
+void	print_stack(t_mylist *stack);
+void	free_stack(t_mylist **stack);
+void	push_front(t_mylist **stack, int value);
 
 // Implémentations simples pour test
 
-void push_front(t_mylist **stack, int value)
+void	push_front(t_mylist **stack, int value)
 {
-    t_mylist *node = malloc(sizeof(t_mylist));
-    if (!node)
-        return;
-    node->value = value;
-    node->next = *stack;
-    *stack = node;
+	t_mylist	*node;
+
+	node = malloc(sizeof(t_mylist));
+	if (!node)
+		return ;
+	node->value = value;
+	node->next = *stack;
+	*stack = node;
 }
 
-void print_stack(t_mylist *stack)
+void	print_stack(t_mylist *stack)
 {
-    while (stack)
-    {
-        printf("%d ", stack->value);
-        stack = stack->next;
-    }
-    printf("\n");
+	while (stack)
+	{
+		printf("%d ", stack->value);
+		stack = stack->next;
+	}
+	printf("\n");
 }
 
-void free_stack(t_mylist **stack)
+void	free_stack(t_mylist **stack)
 {
-    t_mylist *tmp;
-    while (*stack)
-    {
-        tmp = (*stack)->next;
-        free(*stack);
-        *stack = tmp;
-    }
+	t_mylist	*tmp;
+
+	while (*stack)
+	{
+		tmp = (*stack)->next;
+		free(*stack);
+		*stack = tmp;
+	}
 }
 
-int main(void)
+int	main(void)
 {
-    t_mylist *a = NULL;
-    t_mylist *b = NULL;
+	t_mylist	*a;
+	t_mylist	*b;
 
-    // Remplir la pile a avec des valeurs non triées
-    push_front(&a, 3);
-    push_front(&a, 1);
-    push_front(&a, 8);
-    push_front(&a, 5);
-    push_front(&a, 2);
-
-    printf("Avant pushswap: ");
-    print_stack(a);
-
-    pushswap(&a, &b);
-
-    printf("Après pushswap: ");
-    print_stack(a);
-
-    free_stack(&a);
-    free_stack(&b);
-
-    return 0;
+	a = NULL;
+	b = NULL;
+	// Remplir la pile a avec des valeurs non triées
+	push_front(&a, 3);
+	push_front(&a, 1);
+	push_front(&a, 8);
+	push_front(&a, 5);
+	push_front(&a, 2);
+	printf("Avant pushswap: ");
+	print_stack(a);
+	pushswap(&a, &b);
+	printf("Après pushswap: ");
+	print_stack(a);
+	free_stack(&a);
+	free_stack(&b);
+	return (0);
 }
  */

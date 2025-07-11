@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 01:09:22 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 16:48:00 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/11 02:25:13 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	find_max(t_mylist *b)
 	}
 	return (value);
 }
+
 void	move_to_top(t_mylist **stack, int index, char *ra_cmd, char *rra_cmd)
 {
 	int	size;
@@ -45,6 +46,7 @@ void	move_to_top(t_mylist **stack, int index, char *ra_cmd, char *rra_cmd)
 			reverse_rotate(stack, rra_cmd);
 	}
 }
+
 int	get_index(t_mylist *b, int value)
 {
 	t_mylist	*cur;
@@ -66,12 +68,23 @@ void	reinject_from_b(t_mylist **a, t_mylist **b)
 {
 	int	max;
 	int	index;
+	int	size_b;
 
 	while (*b)
 	{
 		max = find_max(*b);
 		index = get_index(*b, max);
-		move_to_top(b, index, "rb", "rrb");
+		size_b = countlist(*b);
+		if (index <= size_b / 2)
+		{
+			while ((*b)->value != max)
+				rotate(b, "rb");
+		}
+		 else
+        {
+            while ((*b)->value != max)
+                reverse_rotate(b, "rrb");
+        }
 		push(b, a, "pa");
 	}
 }
@@ -97,6 +110,8 @@ void	pushswap(t_mylist **a, t_mylist **b)
 			return ;
 		filter_by_chunks(a, b, sorted_tab, size);
 		reinject_from_b(a, b);
+		if (!sorted_list(*a))
+			swap(a, "sa");
 		free(sorted_tab);
 	}
 }
