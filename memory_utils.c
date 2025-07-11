@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:49:31 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/04 22:09:04 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/12 00:59:28 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ int	free_node(t_mylist *node)
 
 int	check_tab(char **tab)
 {
-	int	i;
+	int		i;
+	long	val;
 
 	i = 0;
 	while (tab[i])
 	{
-		if (ft_atoi_modif(tab[i]) > INT_MAX || ft_atoi_modif(tab[i]) < INT_MIN)
+		val = ft_atoi_modif(tab[i]);
+		if (val > INT_MAX || val < INT_MIN)
 			return (1);
 		i++;
 	}
@@ -54,12 +56,10 @@ char	**get_args(int ac, char **av)
 	if (ac <= 1)
 		return (NULL);
 	if (ac == 2)
-	{
 		return (ft_split(av[1], ' '));
-	}
 	else
 	{
-		args = malloc(sizeof(char *) * ac);
+		args = malloc(sizeof(char *) * (ac));
 		if (!args)
 			return (NULL);
 		while (i < (ac - 1))

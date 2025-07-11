@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 01:09:22 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/11 03:39:02 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/12 01:54:09 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,23 +70,26 @@ void	reinject_from_b(t_mylist **a, t_mylist **b)
 	int	index;
 	int	size_b;
 
-	while (*b)
+	max = find_max(*b);
+	index = get_index(*b, max);
+	size_b = countlist(*b);
+	if (index <= size_b / 2)
 	{
-		max = find_max(*b);
-		index = get_index(*b, max);
-		size_b = countlist(*b);
-		if (index <= size_b / 2)
-		{
-			while ((*b)->value != max)
-				rotate(b, "rb");
-		}
-		 else
-        {
-            while ((*b)->value != max)
-                reverse_rotate(b, "rrb");
-        }
-		push(b, a, "pa");
+		while ((*b)->value != max)
+			rotate(b, "rb");
+		if ((*b)->next && (*b)->value < (*b)->next->value)
+			swap(b, "sb");
 	}
+	else
+	{
+		while ((*b)->value != max)
+			reverse_rotate(b, "rrb");
+		if ((*b)->next && (*b)->value < (*b)->next->value)
+			swap(b, "sb");
+	}
+	push(b, a, "pa");
+	if ((*a)->next && (*a)->value > (*a)->next->value)
+		swap(a, "sa");
 }
 
 void	pushswap(t_mylist **a, t_mylist **b)
@@ -106,12 +109,9 @@ void	pushswap(t_mylist **a, t_mylist **b)
 	else
 	{
 		sorted_tab = get_sorted_array(*a, size);
-		if (!sorted_tab)
-			return ;
 		filter_by_chunks(a, b, sorted_tab, size);
-		reinject_from_b(a, b);
-		if (!sorted_list(*a))
-			swap(a, "sa");
+		while (*b)
+			reinject_from_b(a, b);
 		free(sorted_tab);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 01:10:50 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 12:52:52 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/12 01:02:39 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,24 @@ void	quicksort(int *tab, int deb, int fin)
 		quicksort(tab, deb, p - 1);
 		quicksort(tab, p + 1, fin);
 	}
+}
+
+int	*get_sorted_array(t_mylist *a, int size)
+{
+	int	*tab;
+	int	i;
+
+	if (!a || size <= 0)
+		return (NULL);
+	tab = malloc(sizeof(int) * size);
+	if (!tab)
+		return (NULL);
+	i = 0;
+	while (a)
+	{
+		tab[i] = a->value;
+		a = a->next;
+		i++;
+	}
+	return (tab);
 }

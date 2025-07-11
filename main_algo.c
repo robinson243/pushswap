@@ -6,32 +6,12 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:19 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/11 03:33:29 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/12 01:02:05 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "push_swap.h"
-
-int	*get_sorted_array(t_mylist *a, int size)
-{
-	int	*tab;
-	int	i;
-
-	if (!a || size <= 0)
-		return (NULL);
-	tab = malloc(sizeof(int) * size);
-	if (!tab)
-		return (NULL);
-	i = 0;
-	while (a)
-	{
-		tab[i] = a->value;
-		a = a->next;
-		i++;
-	}
-	return (tab);
-}
 
 int	*get_chunk_limits(int *sorted_tab, int size, int chunk_count)
 {
@@ -93,9 +73,9 @@ int	find_next_in_chunk(t_mylist *stack, int limit)
 
 int	get_median(t_mylist *b)
 {
-	int		*tab;
-	int		size;
-	int		median;
+	int	*tab;
+	int	size;
+	int	median;
 
 	size = countlist(b);
 	tab = get_sorted_array(b, size);
@@ -106,37 +86,33 @@ int	get_median(t_mylist *b)
 	return (median);
 }
 
-void	filter_by_chunks(t_mylist **stack_a, t_mylist **stack_b,
-		int *sorted_tab, int size)
+void	filter_by_chunks(t_mylist **a, t_mylist **b, int *tab, int size)
 {
-	int	numberchunks;
+	int	n;
 	int	i;
-	int	*chunk_limits;
+	int	*lim;
+	int	idx;
 
-	if (size <= 100)
-		numberchunks = 5;
-	else
-		numberchunks = 13;
-	chunk_limits = get_chunk_limits(sorted_tab, size, numberchunks);
-	if (!chunk_limits)
+	n = 5;
+	if (size > 100)
+		n = 13;
+	lim = get_chunk_limits(tab, size, n);
+	if (!lim)
 		return ;
 	i = 0;
-	while (i < numberchunks)
+	while (i < n)
 	{
-		while (has_chunk_value(stack_a, chunk_limits[i]))
+		while (has_chunk_value(a, lim[i]))
 		{
-			if ((*stack_a)->value <= chunk_limits[i])
-			{
-				if (*stack_b && (*stack_a)->value < get_median(*stack_b))
-					rotate(stack_b, "rb");
-				push(stack_a, stack_b, "pb");
-			}
-			else
-				rotate(stack_a, "ra");
+			idx = find_next_in_chunk(*a, lim[i]);
+			move_to_top(a, idx, "ra", "rra");
+			if (*b && (*a)->value < get_median(*b))
+				rotate(b, "rb");
+			push(a, b, "pb");
 		}
 		i++;
 	}
-	free(chunk_limits);
+	free(lim);
 }
 
 /*
