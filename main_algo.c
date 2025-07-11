@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:19 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/11 02:45:37 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/11 03:33:29 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,21 @@ int	find_next_in_chunk(t_mylist *stack, int limit)
 	return (-1);
 }
 
+int	get_median(t_mylist *b)
+{
+	int		*tab;
+	int		size;
+	int		median;
+
+	size = countlist(b);
+	tab = get_sorted_array(b, size);
+	if (!tab)
+		return (0);
+	median = tab[size / 2];
+	free(tab);
+	return (median);
+}
+
 void	filter_by_chunks(t_mylist **stack_a, t_mylist **stack_b,
 		int *sorted_tab, int size)
 {
@@ -101,7 +116,7 @@ void	filter_by_chunks(t_mylist **stack_a, t_mylist **stack_b,
 	if (size <= 100)
 		numberchunks = 5;
 	else
-		numberchunks = 11;
+		numberchunks = 13;
 	chunk_limits = get_chunk_limits(sorted_tab, size, numberchunks);
 	if (!chunk_limits)
 		return ;
@@ -111,7 +126,11 @@ void	filter_by_chunks(t_mylist **stack_a, t_mylist **stack_b,
 		while (has_chunk_value(stack_a, chunk_limits[i]))
 		{
 			if ((*stack_a)->value <= chunk_limits[i])
+			{
+				if (*stack_b && (*stack_a)->value < get_median(*stack_b))
+					rotate(stack_b, "rb");
 				push(stack_a, stack_b, "pb");
+			}
 			else
 				rotate(stack_a, "ra");
 		}
