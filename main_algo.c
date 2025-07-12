@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 14:56:19 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/12 01:02:05 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:14:44 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	*get_chunk_limits(int *sorted_tab, int size, int chunk_count)
 int	has_chunk_value(t_mylist **stack, int nb)
 {
 	t_mylist	*cur;
-	int			value;
 
 	cur = *stack;
 	while (cur)
@@ -86,27 +85,29 @@ int	get_median(t_mylist *b)
 	return (median);
 }
 
-void	filter_by_chunks(t_mylist **a, t_mylist **b, int *tab, int size)
+void	filter_by_chunks(t_mylist **a, t_mylist **b, int *sorted_tab, int size)
 {
 	int	n;
 	int	i;
 	int	*lim;
-	int	idx;
+	int	median;
 
-	n = 5;
 	if (size > 100)
 		n = 13;
-	lim = get_chunk_limits(tab, size, n);
+	else
+		n = 5;
+	lim = get_chunk_limits(sorted_tab, size, n);
 	if (!lim)
 		return ;
+	median = sorted_tab[size / 2];
 	i = 0;
 	while (i < n)
 	{
 		while (has_chunk_value(a, lim[i]))
 		{
-			idx = find_next_in_chunk(*a, lim[i]);
+			int idx = find_next_in_chunk(*a, lim[i]);
 			move_to_top(a, idx, "ra", "rra");
-			if (*b && (*a)->value < get_median(*b))
+			if (*b && (*a)->value < median)
 				rotate(b, "rb");
 			push(a, b, "pb");
 		}

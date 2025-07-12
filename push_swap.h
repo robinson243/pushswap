@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 21:09:54 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 16:45:59 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:24:45 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,10 @@ void				filter_by_chunks(t_mylist **stack_a, t_mylist **stack_b,
 /*----------------------------------------------------------------------------*/
 int					find_max(t_mylist *b);
 int					get_index(t_mylist *b, int value);
-void 				rotate_to_top(t_mylist **stack, int index, char *name);
 void				move_to_top(t_mylist **stack, int index,
 					char *ra_cmd, char *rra_cmd);
 void				reinject_from_b(t_mylist **a, t_mylist **b);
 void				pushswap(t_mylist **a, t_mylist **b);
+int					find_min(t_mylist *a);
 
 #endif

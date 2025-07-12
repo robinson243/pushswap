@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 01:09:22 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/12 02:17:14 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/12 17:24:22 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	reinject_from_b(t_mylist **a, t_mylist **b)
 	int	index;
 	int	size_b;
 
+	if (!b || !*b) 
+		return ;
 	max = find_max(*b);
 	index = get_index(*b, max);
 	size_b = countlist(*b);
@@ -77,19 +79,31 @@ void	reinject_from_b(t_mylist **a, t_mylist **b)
 	{
 		while ((*b)->value != max)
 			rotate(b, "rb");
-		if ((*b)->next && (*b)->value < (*b)->next->value)
-			swap(b, "sb");
 	}
 	else
 	{
 		while ((*b)->value != max)
 			reverse_rotate(b, "rrb");
-		if ((*b)->next && (*b)->value < (*b)->next->value)
-			swap(b, "sb");
 	}
 	push(b, a, "pa");
-	if ((*a)->next && (*a)->value > (*a)->next->value)
-		swap(a, "sa");
+}
+
+int	find_min(t_mylist *a)
+{
+	t_mylist	*cur;
+	int			min_val;
+
+	if (!a)
+		return (0);
+	cur = a;
+	min_val = cur->value;
+	while (cur)
+	{
+		if (cur->value < min_val)
+			min_val = cur->value;
+		cur = cur->next;
+	}
+	return (min_val);
 }
 
 void	pushswap(t_mylist **a, t_mylist **b)
@@ -110,9 +124,16 @@ void	pushswap(t_mylist **a, t_mylist **b)
 	{
 		sorted_tab = get_sorted_array(*a, size);
 		filter_by_chunks(a, b, sorted_tab, size);
-		while ((*a)->value > (*a)->next->value)
-			swap(a, "sa");
-		reinject_from_b(a, b);
+		
+		// Vider complètement la pile B
+		while (*b)
+			reinject_from_b(a, b);
+		
+		// Corriger l'ordre final dans A
+		int min_val = find_min(*a); // Ajouter cette fonction
+		int min_index = get_index(*a, min_val);
+		move_to_top(a, min_index, "ra", "rra");
+		
 		free(sorted_tab);
 	}
 }
