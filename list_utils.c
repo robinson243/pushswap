@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:49:26 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/06 11:25:58 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/12 18:06:30 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,3 +80,4 @@ int	countlist(t_mylist *head)
 	}
 	return (i);
 }
+

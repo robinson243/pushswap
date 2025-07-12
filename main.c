@@ -6,11 +6,21 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 12:32:18 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/12 01:52:31 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/12 18:41:20 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	print_stack(t_mylist *stack)
+{
+	while (stack)
+	{
+		printf("%d ", stack->value);
+		stack = stack->next;
+	}
+	printf("\n");
+}
 
 int	main(int ac, char **av)
 {
