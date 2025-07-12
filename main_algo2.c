@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 01:09:22 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/12 01:54:09 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/12 02:17:14 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,9 @@ void	pushswap(t_mylist **a, t_mylist **b)
 	{
 		sorted_tab = get_sorted_array(*a, size);
 		filter_by_chunks(a, b, sorted_tab, size);
-		while (*b)
-			reinject_from_b(a, b);
+		while ((*a)->value > (*a)->next->value)
+			swap(a, "sa");
+		reinject_from_b(a, b);
 		free(sorted_tab);
 	}
 }

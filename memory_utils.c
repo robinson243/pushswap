@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:49:31 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/12 00:59:28 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/12 02:17:18 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	is_valid(int ac, char **av)
 	if (!tab)
 		return (0);
 	if (check_tab(tab))
-		return (free_tableau(tab), 0);
+		return (free_tableau(tab),0);
 	if (put_in_struct(&head, tab))
 	{
 		free_tableau(tab);
@@ -101,3 +101,4 @@ int	is_valid(int ac, char **av)
 	free_tableau(tab);
 	return (1);
 }
+
