@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 01:10:50 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/12 01:02:39 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:35:30 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,21 @@ int	*get_sorted_array(t_mylist *a, int size)
 		a = a->next;
 		i++;
 	}
+	quicksort(tab, 0, size - 1);
 	return (tab);
+}
+
+int	get_position(t_mylist *stack, int index_to_find)
+{
+	int	pos;
+
+	pos = 0;
+	while (stack)
+	{
+		if (stack->index == index_to_find)
+			return (pos);
+		pos++;
+		stack = stack->next;
+	}
+	return (-1);
 }

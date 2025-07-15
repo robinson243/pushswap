@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:49:35 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/12 18:24:35 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/14 23:44:36 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	swap(t_mylist **stack, char *name)
 	current->next->value = temp;
 	if (name)
 	{
-		write(1, name, strlen(name));
+		write(1, name, ft_strlen(name));
 		write(1, "\n", 1);
 	}
 }
@@ -43,7 +43,7 @@ void	push(t_mylist **stack_a, t_mylist **stack_b, char *name)
 	*stack_b = node;
 	if (name)
 	{
-		write(1, name, strlen(name));
+		write(1, name, ft_strlen(name));
 		write(1, "\n", 1);
 	}
 }
@@ -64,7 +64,7 @@ void	rotate(t_mylist **stack, char *name)
 	last->next = tmp;
 	if (name)
 	{
-		write(1, name, strlen(name));
+		write(1, name, ft_strlen(name));
 		write(1, "\n", 1);
 	}
 }
@@ -88,19 +88,7 @@ void	reverse_rotate(t_mylist **stack, char *name)
 	*stack = last;
 	if (name)
 	{
-		write(1, name, strlen(name));
+		write(1, name, ft_strlen(name));
 		write(1, "\n", 1);
-	}
-}
-
-void	printlist(t_mylist *head)
-{
-	t_mylist	*current;
-
-	current = head;
-	while (current)
-	{
-		printf("%d ", current->value);
-		current = current->next;
 	}
 }

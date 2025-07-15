@@ -6,7 +6,7 @@
 #    By: romukena <romukena@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/12 14:03:53 by romukena          #+#    #+#              #
-#    Updated: 2025/07/12 14:23:14 by romukena         ###   ########.fr        #
+#    Updated: 2025/07/14 19:11:13 by romukena         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRCS = \
     main_algo.c \
     main_algo2.c \
     stack_operations.c \
+    stack_operations2.c \
     sort_operations.c \
     list_utils.c \
     memory_utils.c \

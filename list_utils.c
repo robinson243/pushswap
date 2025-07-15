@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:49:26 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/12 18:06:30 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:38:45 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	free_list(t_mylist **lst)
 	t_mylist	*data_next;
 
 	current = *lst;
+	if (!lst || !*lst)
+		return ;
 	if (!lst)
 		return ;
 	while (current)
@@ -80,4 +82,3 @@ int	countlist(t_mylist *head)
 	}
 	return (i);
 }
-

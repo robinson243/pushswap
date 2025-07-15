@@ -6,134 +6,161 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 01:09:22 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/12 17:24:22 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:25:53 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	find_max(t_mylist *b)
+int	ft_abs(int n)
+{
+	if (n < 0)
+		return (-n);
+	return (n);
+}
+
+t_mylist	*find_cheapest_move(t_mylist *b)
 {
 	t_mylist	*cur;
-	int			value;
+	t_mylist	*best;
+	int			best_cost;
+	int			cost;
 
 	cur = b;
-	value = cur->value;
+	best = b;
+	best_cost = ft_abs(b->cost_a) + ft_abs(b->cost_b);
 	while (cur)
 	{
-		if (value < cur->value)
-			value = cur->value;
+		cost = ft_abs(cur->cost_a) + ft_abs(cur->cost_b);
+		if (cost < best_cost)
+		{
+			best_cost = cost;
+			best = cur;
+		}
 		cur = cur->next;
 	}
-	return (value);
+	return (best);
 }
 
-void	move_to_top(t_mylist **stack, int index, char *ra_cmd, char *rra_cmd)
+void	execute_move(t_mylist **a, t_mylist **b, t_mylist *move)
 {
-	int	size;
-	int	i;
+	int	cost_a;
+	int	cost_b;
 
-	i = 0;
-	size = countlist(*stack);
-	if (index <= size / 2)
+	cost_b = move->cost_b;
+	cost_a = move->cost_a;
+	while (cost_a > 0 && cost_b > 0)
 	{
-		while (i++ < index)
-			rotate(stack, ra_cmd);
+		rr(a, b);
+		cost_a--;
+		cost_b--;
 	}
-	else
+	while (cost_a < 0 && cost_b < 0)
 	{
-		while (i++ < size - index)
-			reverse_rotate(stack, rra_cmd);
+		rrr(a, b);
+		cost_a++;
+		cost_b++;
 	}
-}
-
-int	get_index(t_mylist *b, int value)
-{
-	t_mylist	*cur;
-	int			i;
-
-	cur = b;
-	i = 0;
-	while (cur)
-	{
-		if (value == cur->value)
-			return (i);
-		cur = cur->next;
-		i++;
-	}
-	return (i);
-}
-
-void	reinject_from_b(t_mylist **a, t_mylist **b)
-{
-	int	max;
-	int	index;
-	int	size_b;
-
-	if (!b || !*b) 
-		return ;
-	max = find_max(*b);
-	index = get_index(*b, max);
-	size_b = countlist(*b);
-	if (index <= size_b / 2)
-	{
-		while ((*b)->value != max)
-			rotate(b, "rb");
-	}
-	else
-	{
-		while ((*b)->value != max)
-			reverse_rotate(b, "rrb");
-	}
+	rotate_times(a, &cost_a, "ra", "rra");
+	rotate_times(b, &cost_b, "rb", "rrb");
 	push(b, a, "pa");
 }
 
-int	find_min(t_mylist *a)
+void	align_stack_a(t_mylist **a)
 {
+	int			size;
+	int			pos;
 	t_mylist	*cur;
-	int			min_val;
-
-	if (!a)
-		return (0);
-	cur = a;
-	min_val = cur->value;
-	while (cur)
-	{
-		if (cur->value < min_val)
-			min_val = cur->value;
-		cur = cur->next;
-	}
-	return (min_val);
-}
-
-void	pushswap(t_mylist **a, t_mylist **b)
-{
-	int	*sorted_tab;
-	int	size;
 
 	size = countlist(*a);
-	if (size <= 1)
-		return ;
-	if (size == 2)
-		sort_two(a);
-	else if (size == 3)
-		sort_three(a);
-	else if (size <= 5)
-		sort_five(a, b);
+	pos = 0;
+	cur = *a;
+	while (cur && cur->index != 0)
+	{
+		cur = cur->next;
+		pos++;
+	}
+	if (pos <= size / 2)
+		while (pos-- > 0)
+			rotate(a, "ra");
 	else
 	{
-		sorted_tab = get_sorted_array(*a, size);
-		filter_by_chunks(a, b, sorted_tab, size);
-		
-		// Vider complètement la pile B
-		while (*b)
-			reinject_from_b(a, b);
-		
-		// Corriger l'ordre final dans A
-		int min_val = find_min(*a); // Ajouter cette fonction
-		int min_index = get_index(*a, min_val);
-		move_to_top(a, min_index, "ra", "rra");
-		
-		free(sorted_tab);
+		pos = size - pos;
+		while (pos-- > 0)
+			reverse_rotate(a, "rra");
 	}
 }
+
+void	push_swap(t_mylist **a, t_mylist **b)
+{
+	int			size;
+	int			*sorted;
+	t_mylist	*move;
+
+	if (!a || !*a || countlist(*a) <= 1 || sorted_list(*a))
+		return ;
+	size = countlist(*a);
+	sorted = get_sorted_array(*a, size);
+	if (!sorted)
+		return ;
+	get_index_for_list(sorted, *a, size);
+	free(sorted);
+	if (size <= 5)
+		return (small_sort(a, b));
+	while (countlist(*a) > 3)
+		push_to_b(a, b);
+	sort_three(a);
+	while (*b)
+	{
+		calculate_move_cost(*a, *b);
+		move = find_cheapest_move(*b);
+		execute_move(a, b, move);
+	}
+	align_stack_a(a);
+}
+
+/* void push_swap(t_mylist **a, t_mylist **b)
+{
+	int			size;
+	int			*sorted;
+	int			loop;
+	t_mylist	*move;
+
+	loop = 0;
+	int max_loops = 10000; // sécurité anti-boucle infinie
+	size = countlist(*a);
+	sorted = get_sorted_array(*a, size);
+	get_index_for_list(sorted, *a, size);
+	free(sorted);
+	if (sorted_list(*a))
+		return ;
+	if (size <= 5)
+		small_sort(a, b);
+	else
+	{
+		while (countlist(*a) > 3)
+			push_to_b(a, b);
+		sort_three(a);
+		while (*b && loop < max_loops)
+		{
+			printf("Avant calculate_move_cost:\n");
+			print_stack(*a, "stack_a");
+			print_stack(*b, "stack_b");
+			calculate_move_cost(*a, *b);
+			move = find_cheapest_move(*a);
+			if (!move)
+				break ;
+			execute_move(a, b, move);
+			printf("Après execute_move:\n");
+			print_stack(*a, "stack_a");
+			print_stack(*b, "stack_b");
+			printf("\n");
+			loop++;
+		}
+		if (loop == max_loops)
+			printf("Attention : boucle maximale atteinte !\n");
+		align_stack_a(a);
+	}
+}
+
+ */

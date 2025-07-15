@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:48:43 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/04 22:26:47 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/13 16:03:00 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ int	sorted_list(t_mylist *stack)
 
 int	put_in_struct(t_mylist **List, char **av)
 {
-	int	i;
-	int	num;
+	int		i;
+	long	num;
 
 	i = 0;
 	if (!av || !av[0])
@@ -106,9 +106,9 @@ int	put_in_struct(t_mylist **List, char **av)
 	while (av[i])
 	{
 		num = ft_atoi_modif(av[i]);
-		if (num > INT_MAX || num < INT_MIN)
+		if (num == 99999999999999 || num > INT_MAX || num < INT_MIN)
 			return (1);
-		addback(List, num);
+		addback(List, (int)num);
 		i++;
 	}
 	return (0);

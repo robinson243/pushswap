@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 11:13:02 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/10 13:50:25 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:15:00 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	sort_two(t_mylist **stack)
 
 void	sort_three(t_mylist **stack)
 {
+	if (!stack || !*stack || !(*stack)->next || !(*stack)->next->next)
+		return ;
 	if ((*stack)->value > (*stack)->next->value
 		&& (*stack)->next->value < (*stack)->next->next->value
 		&& (*stack)->value < (*stack)->next->next->value)
@@ -54,107 +56,56 @@ int	find_smallest(t_mylist **stack_a)
 	int			val;
 	int			i;
 
+	if (!stack_a || !*stack_a)
+		return (-1);
 	cur = *stack_a;
-	i = 0;
 	val = cur->value;
 	while (cur)
 	{
-		if (cur && val > cur->value)
+		if (val > cur->value)
 			val = cur->value;
 		cur = cur->next;
 	}
 	cur = *stack_a;
+	i = 0;
 	while (cur)
 	{
-		if (cur && val == cur->value)
+		if (val == cur->value)
 			return (i);
 		cur = cur->next;
 		i++;
 	}
-	return (i);
+	return (-1);
 }
 
-void	push_to_b(t_mylist **stack_a, t_mylist **stack_b)
+void	push_to_b(t_mylist **a, t_mylist **b)
 {
 	int	size;
 	int	pos;
+	int	rotations;
 
-	size = countlist(*stack_a);
-	pos = find_smallest(stack_a);
-	if ((size / 2) >= pos)
-	{
-		while (pos > 0)
-		{
-			rotate(stack_a, "ra");
-			pos--;
-		}
-	}
+	size = countlist(*a);
+	pos = find_smallest(a);
+	if (pos <= size / 2)
+		while (pos-- > 0)
+			rotate(a, "ra");
 	else
 	{
-		while (pos < size)
-		{
-			reverse_rotate(stack_a, "rra");
-			pos++;
-		}
+		rotations = size - pos;
+		while (rotations-- > 0)
+			reverse_rotate(a, "rra");
 	}
-	push(stack_a, stack_b, "pb");
+	push(a, b, "pb");
 }
 
 void	sort_five(t_mylist **stack_a, t_mylist **stack_b)
 {
 	push_to_b(stack_a, stack_b);
 	push_to_b(stack_a, stack_b);
-	sort_three(stack_a);
+	if (countlist(*stack_a) == 3)
+		sort_three(stack_a);
+	else if (countlist(*stack_a) == 2)
+		sort_two(stack_a);
 	push(stack_b, stack_a, "pa");
 	push(stack_b, stack_a, "pa");
 }
-/* #include "push_swap.h"
-
-static void	test_five(const int arr[5])
-{
-	t_mylist	*a;
-	t_mylist	*b;
-
-	a = NULL;
-	b = NULL;
-	printf("\nTesting: ");
-	for (int i = 0; i < 5; i++)
-	{
-		addback(&a, arr[i]);
-		printf("%d ", arr[i]);
-	}
-	sort_five(&a, &b);
-	printf("\nResult:  ");
-	printlist(a);
-	printf("Sorted: %s | ops: ", sorted_list(a) ? "✓" : "✗");
-	// Ici vous pourriez ajouter un compteur d'opérations
-}
-
-int	main(void)
-{
-	printf("=== 5-NUMBER SORT TESTER ===\n");
-
-	// Permutations uniques (sans doublons)
-	test_five((int[]){1, 2, 3, 4, 5}); // Déjà trié
-	test_five((int[]){5, 4, 3, 2, 1}); // Inverse
-	test_five((int[]){2, 4, 1, 5, 3}); // Mélangé aléatoire
-	test_five((int[]){3, 1, 5, 2, 4}); // Autre permutation
-	test_five((int[]){4, 2, 5, 1, 3}); // Encore différent
-
-	return (0);
-}
-int main(void)
-{
-	t_mylist *a = NULL;
-	t_mylist *b = NULL;
-	addback(&a, 200);
-	addback(&a, 878);
-	addback(&a, 6);
-	addback(&a, 5656);
-	addback(&a, 56);
-	push_to_b(&a, &b);
-	push(&a, &b);
-	push_to_b(&a, &b);
-	push(&a, &b);
-	printlist(a);
-} */ 

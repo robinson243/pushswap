@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:49:31 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/12 02:17:18 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/15 15:25:18 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	free_tableau(char **tab)
 	free(tab);
 }
 
-int	free_node(t_mylist *node)
+/* int	free_node(t_mylist *node)
 {
 	free(node);
 	return (0);
-}
+} */
 
 int	check_tab(char **tab)
 {
@@ -40,7 +40,7 @@ int	check_tab(char **tab)
 	while (tab[i])
 	{
 		val = ft_atoi_modif(tab[i]);
-		if (val > INT_MAX || val < INT_MIN)
+		if (val == 99999999999999 || val > INT_MAX || val < INT_MIN)
 			return (1);
 		i++;
 	}
@@ -84,7 +84,7 @@ int	is_valid(int ac, char **av)
 	if (!tab)
 		return (0);
 	if (check_tab(tab))
-		return (free_tableau(tab),0);
+		return (free_tableau(tab), 0);
 	if (put_in_struct(&head, tab))
 	{
 		free_tableau(tab);
@@ -101,4 +101,3 @@ int	is_valid(int ac, char **av)
 	free_tableau(tab);
 	return (1);
 }
-
