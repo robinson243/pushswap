@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 01:09:22 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/15 16:25:53 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:23:55 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void	align_stack_a(t_mylist **a)
 			reverse_rotate(a, "rra");
 	}
 }
-
-void	push_swap(t_mylist **a, t_mylist **b)
+/* Le vrai */
+/* void	push_swap(t_mylist **a, t_mylist **b)
 {
 	int			size;
 	int			*sorted;
@@ -117,50 +117,24 @@ void	push_swap(t_mylist **a, t_mylist **b)
 		execute_move(a, b, move);
 	}
 	align_stack_a(a);
-}
-
-/* void push_swap(t_mylist **a, t_mylist **b)
+} */
+ 
+/* Le faux */
+void push_swap(t_mylist **a, t_mylist **b)
 {
-	int			size;
-	int			*sorted;
-	int			loop;
-	t_mylist	*move;
+    int size = countlist(*a);
+    int *sorted;
+    // t_mylist *move;
 
-	loop = 0;
-	int max_loops = 10000; // sécurité anti-boucle infinie
-	size = countlist(*a);
-	sorted = get_sorted_array(*a, size);
-	get_index_for_list(sorted, *a, size);
-	free(sorted);
-	if (sorted_list(*a))
-		return ;
-	if (size <= 5)
-		small_sort(a, b);
-	else
-	{
-		while (countlist(*a) > 3)
-			push_to_b(a, b);
-		sort_three(a);
-		while (*b && loop < max_loops)
-		{
-			printf("Avant calculate_move_cost:\n");
-			print_stack(*a, "stack_a");
-			print_stack(*b, "stack_b");
-			calculate_move_cost(*a, *b);
-			move = find_cheapest_move(*a);
-			if (!move)
-				break ;
-			execute_move(a, b, move);
-			printf("Après execute_move:\n");
-			print_stack(*a, "stack_a");
-			print_stack(*b, "stack_b");
-			printf("\n");
-			loop++;
-		}
-		if (loop == max_loops)
-			printf("Attention : boucle maximale atteinte !\n");
-		align_stack_a(a);
-	}
+    if (size <= 1 || sorted_list(*a))
+        return;
+    sorted = get_sorted_array(*a, size);
+    if (!sorted)
+        return;
+    get_index_for_list(sorted, *a, size);
+    free(sorted);
+    if (size <= 5)
+        return small_sort(a, b);
+    radix_sort(a, b);
+	// align_stack_a(a);
 }
-
- */

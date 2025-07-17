@@ -6,7 +6,7 @@
 /*   By: romukena <romukena@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 21:09:54 by romukena          #+#    #+#             */
-/*   Updated: 2025/07/15 16:25:01 by romukena         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:08:45 by romukena         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define PUSH_SWAP_H
 
 # include <limits.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
 
 /* Structure de données */
 typedef struct s_mylist
@@ -24,10 +24,10 @@ typedef struct s_mylist
 	int				value;
 	int				index;
 	int				pos;
-	int				cost_a;   
+	int				cost_a;
 	int				cost_b;
 	struct s_mylist	*next;
-}	t_mylist;
+}					t_mylist;
 
 /*----------------------------------------------------------------------------*/
 /*                                input_validation.c                          */
@@ -70,7 +70,7 @@ void				rr(t_mylist **a, t_mylist **b);
 void				rrr(t_mylist **a, t_mylist **b);
 void				printlist(t_mylist *head);
 void				rotate_times(t_mylist **stack, int *cost, char *rot_name,
-					char *rev_name);
+						char *rev_name);
 
 /*----------------------------------------------------------------------------*/
 /*                                sort_operations.c                           */
@@ -110,4 +110,9 @@ void				align_stack_a(t_mylist **a);
 void				push_swap(t_mylist **a, t_mylist **b);
 void				print_stack(t_mylist *stack);
 
+/*----------------------------------------------------------------------------*/
+/*                                optimized.c                                */
+/*----------------------------------------------------------------------------*/
+void push_b_chunked(t_mylist **a, t_mylist **b);
+void radix_sort(t_mylist **a, t_mylist **b);
 #endif

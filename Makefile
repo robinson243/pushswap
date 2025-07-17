@@ -6,7 +6,7 @@
 #    By: romukena <romukena@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/12 14:03:53 by romukena          #+#    #+#              #
-#    Updated: 2025/07/14 19:11:13 by romukena         ###   ########.fr        #
+#    Updated: 2025/07/15 21:13:34 by romukena         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRCS = \
     list_utils.c \
     memory_utils.c \
     input_validation.c \
-    quicksort.c
+    quicksort.c \
+    optimized.c
 
 OBJS = $(SRCS:.c=.o)
 
